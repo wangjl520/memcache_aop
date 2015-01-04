@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.allinpay.fmp.dao.SysCtrlParamMapper">
+	
+    <resultMap id="SysCtrlParamResult" type="SysCtrlParam">
+        <result property="entityOid" column="ENTITY_OID"/>
+        <result property="agentOid" column="AGENT_OID"/>
+        <result property="appType" column="APP_TYPE"/>
+        <result property="supplierOid" column="SUPPLIER_OID"/>
+        <result property="paramCode" column="PARAM_CODE"/>
+        <result property="cateCode" column="CATE_CODE"/>
+        <result property="paramDesc" column="PARAM_DESC"/>
+        <result property="strValue" column="STR_VALUE"/>
+        <result property="intValue" column="INT_VALUE"/>
+        <result property="dateValue" column="DATE_VALUE"/>
+        <result property="remark" column="REMARK"/>
+        <result property="version" column="VERSION"/>
+        <result property="whenmodified" column="WHENMODIFIED"/>
+        <result property="origFlag" column="ORIG_FLAG"/>
+        <result property="flagDeleted" column="FLAG_DELETED"/>
+        <result property="createdBy" column="CREATED_BY"/>
+        <result property="createdDate" column="CREATED_DATE"/>
+        <result property="lastUpdBy" column="LAST_UPD_BY"/>
+        <result property="lastUpdDate" column="LAST_UPD_DATE"/>
+        <result property="modiNum" column="MODI_NUM"/>
+        <result property="recDigiProof" column="REC_DIGI_PROOF"/>
+        <result property="oldLastUpdDate" column="LAST_UPD_DATE"/>
+    </resultMap>  
+    
+    <!-- query all records from cache -->
+    <select id="getAllSysCtrlParamsFromCache" parameterType="ParamSysCtrlParam" resultMap="SysCtrlParamResult">
+    	select * from SYS_CTRL_PARAM		
+    </select>    
+
+    <!-- insert sql -->
+    <insert id="insertSysCtrlParam" parameterType="SysCtrlParam" >
+        <selectKey keyProperty="entityOid" resultType="java.math.BigDecimal" order="BEFORE">
+            SELECT NEXTVAL FOR GENERIC_SEQ FROM SYSIBM.SYSDUMMY1
+        </selectKey>
+    <![CDATA[
+        INSERT INTO SYS_CTRL_PARAM (
+            ENTITY_OID
+            ,AGENT_OID
+            ,APP_TYPE
+            ,SUPPLIER_OID
+            ,PARAM_CODE
+            ,CATE_CODE
+            ,PARAM_DESC
+            ,STR_VALUE
+            ,INT_VALUE
+            ,DATE_VALUE
+            ,REMARK
+            ,VERSION
+            ,WHENMODIFIED
+            ,ORIG_FLAG
+            ,FLAG_DELETED
+            ,CREATED_BY
+            ,CREATED_DATE
+            ,LAST_UPD_BY
+            ,LAST_UPD_DATE
+            ,MODI_NUM
+            ,REC_DIGI_PROOF
+        ) VALUES (
+             #{entityOid,jdbcType=NUMERIC}
+            ,#{agentOid,jdbcType=NUMERIC}
+            ,#{appType,jdbcType=VARCHAR}
+            ,#{supplierOid,jdbcType=NUMERIC}
+            ,#{paramCode,jdbcType=VARCHAR}
+            ,#{cateCode,jdbcType=VARCHAR}
+            ,#{paramDesc,jdbcType=VARCHAR}
+            ,#{strValue,jdbcType=VARCHAR}
+            ,#{intValue,jdbcType=INTEGER}
+            ,#{dateValue,jdbcType=DATE}
+            ,#{remark,jdbcType=VARCHAR}
+            ,#{version,jdbcType=INTEGER}
+            ,#{whenmodified,jdbcType=TIMESTAMP}
+            ,#{origFlag,jdbcType=VARCHAR}
+            ,#{flagDeleted,jdbcType=VARCHAR}
+            ,#{createdBy,jdbcType=VARCHAR}
+            ,#{createdDate,jdbcType=TIMESTAMP}
+            ,#{lastUpdBy,jdbcType=VARCHAR}
+            ,#{lastUpdDate,jdbcType=TIMESTAMP}
+            ,#{modiNum,jdbcType=NUMERIC}
+            ,#{recDigiProof,jdbcType=VARCHAR}
+        )
+    ]]>
+    </insert>
+
+    <!-- update sql -->
+    <update id="updateSysCtrlParam" parameterType="SysCtrlParam">
+    <![CDATA[
+        UPDATE SYS_CTRL_PARAM SET 
+            AGENT_OID = #{agentOid}
+            ,APP_TYPE = #{appType}
+            ,SUPPLIER_OID = #{supplierOid}
+            ,PARAM_CODE = #{paramCode}
+            ,CATE_CODE = #{cateCode}
+            ,PARAM_DESC = #{paramDesc}
+            ,STR_VALUE = #{strValue}
+            ,INT_VALUE = #{intValue}
+            ,DATE_VALUE = #{dateValue}
+            ,REMARK = #{remark}
+            ,VERSION = #{version}
+            ,WHENMODIFIED = #{whenmodified}
+            ,ORIG_FLAG = #{origFlag}
+            ,FLAG_DELETED = #{flagDeleted}
+            ,CREATED_BY = #{createdBy}
+            ,CREATED_DATE = #{createdDate}
+            ,LAST_UPD_BY = #{lastUpdBy}
+            ,LAST_UPD_DATE = #{lastUpdDate}
+            ,MODI_NUM = #{modiNum}
+            ,REC_DIGI_PROOF = #{recDigiProof}
+       WHERE ENTITY_OID = #{entityOid}
+     AND LAST_UPD_DATE = #{oldLastUpdDate}
+    ]]>
+    </update>
+
+    <!-- delete sql -->
+    <delete id="deleteSysCtrlParam" parameterType="SysCtrlParam">
+        DELETE FROM SYS_CTRL_PARAM WHERE 1=1
+            <if test="null != entityOid">
+                AND ENTITY_OID = #{entityOid}
+            </if>
+            <if test="null != agentOid">
+                AND AGENT_OID = #{agentOid}
+            </if>
+            <if test="null != appType">
+                AND APP_TYPE = #{appType}
+            </if>
+            <if test="null != supplierOid">
+                AND SUPPLIER_OID = #{supplierOid}
+            </if>
+    </delete>
+
+    <select id="getSysCtrlParams" parameterType="ParamSysCtrlParam" resultMap="SysCtrlParamResult">
+        SELECT * FROM SYS_CTRL_PARAM WHERE 1=1 
+            <if test="null != entityOid">
+                AND ENTITY_OID = #{entityOid}
+            </if>
+            <if test="null != agentOid">
+                AND AGENT_OID = #{agentOid}
+            </if>
+            <if test="null != appType">
+                AND APP_TYPE = #{appType}
+            </if>
+            <if test="null != supplierOid">
+                AND SUPPLIER_OID = #{supplierOid}
+            </if>
+			<if test="null != agentOidMustNull">
+                AND AGENT_OID IS NULL
+            </if>
+			<if test="null != suppOidMustNull">
+                AND SUPPLIER_OID IS NULL
+            </if>
+            <if test="null != paramCode">
+                AND PARAM_CODE = #{paramCode}
+            </if>
+            <if test="null != cateCode">
+                AND CATE_CODE = #{cateCode}
+            </if>
+            <if test="null != paramDesc">
+                AND PARAM_DESC = #{paramDesc}
+            </if>
+            <if test="null != strValue">
+                AND STR_VALUE = #{strValue}
+            </if>
+            <if test="null != intValue">
+                AND INT_VALUE = #{intValue}
+            </if>
+            <if test="null != dateValue">
+                AND DATE_VALUE = #{dateValue}
+            </if>
+            <if test="null != remark">
+                AND REMARK = #{remark}
+            </if>
+            <if test="null != version">
+                AND VERSION = #{version}
+            </if>
+            <if test="null != whenmodified">
+                AND WHENMODIFIED = #{whenmodified}
+            </if>
+            <if test="null != origFlag">
+                AND ORIG_FLAG = #{origFlag}
+            </if>
+            <if test="null != flagDeleted">
+                AND FLAG_DELETED = #{flagDeleted}
+            </if>
+            <if test="null != createdBy">
+                AND CREATED_BY = #{createdBy}
+            </if>
+            <if test="null != createdDate">
+                AND CREATED_DATE = #{createdDate}
+            </if>
+            <if test="null != lastUpdBy">
+                AND LAST_UPD_BY = #{lastUpdBy}
+            </if>
+            <if test="null != lastUpdDate">
+                AND LAST_UPD_DATE = #{lastUpdDate}
+            </if>
+            <if test="null != modiNum">
+                AND MODI_NUM = #{modiNum}
+            </if>
+            <if test="null != recDigiProof">
+                AND REC_DIGI_PROOF = #{recDigiProof}
+            </if>
+        <if test="null != sortField">
+            order by ${sortField}
+        </if>
+        <if test="null == sortField">
+        </if>
+    </select>
+    
+	<select id="findOneByKey" parameterType="ParamSysCtrlParam" resultMap="SysCtrlParamResult" >
+        SELECT * FROM SYS_CTRL_PARAM WHERE ENTITY_OID = #{entityOid}
+    </select>   
+    
+</mapper>
